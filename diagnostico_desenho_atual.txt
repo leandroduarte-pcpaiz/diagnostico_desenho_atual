@@ -2,7 +2,7 @@
 
 """
 AIZI ENGINEERING AI
-DIAGNÃƒâ€œSTICO DE DESENHO TÃƒâ€°CNICO
+DIAGNÃ“STICO DE DESENHO TÃ‰CNICO
 
 Objetivos:
 
@@ -10,20 +10,20 @@ Objetivos:
 2. Extrair textos.
 3. Extrair linhas vetoriais.
 4. Identificar contornos fechados.
-5. Identificar automaticamente o contorno da peÃƒÂ§a.
-6. Validar contra dimensÃƒÂµes conhecidas.
+5. Identificar automaticamente o contorno da peÃ§a.
+6. Validar contra dimensÃµes conhecidas.
 7. Reconstruir geometria em mm.
 8. Identificar dobras.
-9. Identificar posiÃƒÂ§ÃƒÂ£o das dobras pela geometria.
+9. Identificar posiÃ§Ã£o das dobras pela geometria.
 10. Calcular BA / BD.
 11. Reconstruir o desenvolvimento pelas abas reais.
 12. Calcular blank.
-13. Gerar diagnÃƒÂ³stico TXT.
-14. Gerar JSON compatÃƒÂ­vel com calculadora_corte.py.
+13. Gerar diagnÃ³stico TXT.
+14. Gerar JSON compatÃ­vel com calculadora_corte.py.
 
-PRINCÃƒÂPIO DO DESENVOLVIMENTO:
+PRINCÃPIO DO DESENVOLVIMENTO:
 
-O desenvolvimento nÃƒÂ£o deve ser obtido simplesmente de:
+O desenvolvimento nÃ£o deve ser obtido simplesmente de:
 
     bounding_box - BD
 
@@ -43,21 +43,21 @@ Para isso o algoritmo:
 
 1. identifica o eixo longitudinal;
 2. procura segmentos longitudinais reais do contorno;
-3. agrupa os segmentos por posiÃƒÂ§ÃƒÂ£o transversal;
-4. identifica as regiÃƒÂµes retas;
-5. identifica as posiÃƒÂ§ÃƒÂµes das dobras;
+3. agrupa os segmentos por posiÃ§Ã£o transversal;
+4. identifica as regiÃµes retas;
+5. identifica as posiÃ§Ãµes das dobras;
 6. calcula as abas;
 7. calcula BA individualmente;
-8. monta a sequÃƒÂªncia final;
-9. valida o fechamento geomÃƒÂ©trico.
+8. monta a sequÃªncia final;
+9. valida o fechamento geomÃ©trico.
 
 Para o componente 046:
 
-    Comprimento longitudinal Ã¢â€°Ë† 672 mm
-    Altura transversal      Ã¢â€°Ë† 163 mm
+    Comprimento longitudinal â‰ˆ 672 mm
+    Altura transversal      â‰ˆ 163 mm
 
-    Dobra 1 Ã¢â€°Ë† 48.2704 mm
-    Dobra 2 Ã¢â€°Ë† 114.7761 mm
+    Dobra 1 â‰ˆ 48.2704 mm
+    Dobra 2 â‰ˆ 114.7761 mm
 
     R = 10 mm
     T = 6.35 mm
@@ -65,9 +65,9 @@ Para o componente 046:
 
 Resultado esperado:
 
-    Desenvolvimento Ã¢â€°Ë† 136.596 mm
+    Desenvolvimento â‰ˆ 136.596 mm
 
-    Blank Ã¢â€°Ë† 136.596 x 672.002 mm
+    Blank â‰ˆ 136.596 x 672.002 mm
 """
 
 from __future__ import annotations
@@ -94,7 +94,7 @@ except ImportError:
 
 
 # =============================================================================
-# CONFIGURAÃƒâ€¡Ãƒâ€¢ES
+# CONFIGURAÃ‡Ã•ES
 # =============================================================================
 
 TOLERANCIA_PONTO = 0.35
@@ -129,17 +129,17 @@ MIN_DISTANCIA_BORDA_DOBRA_MM = 2.0
 # Novo:
 # Para considerar um segmento como uma aresta longitudinal real,
 # ele precisa representar uma parcela significativa do comprimento
-# longitudinal da peÃƒÂ§a.
+# longitudinal da peÃ§a.
 MIN_FRACAO_SEGMENTO_LONGITUDINAL = 0.60
 
-# TolerÃƒÂ¢ncia para agrupar arestas longitudinais paralelas.
+# TolerÃ¢ncia para agrupar arestas longitudinais paralelas.
 TOLERANCIA_TRILHO_TRANSVERSAL_MM = 1.50
 
-# DiferenÃƒÂ§a mÃƒÂ¡xima aceitÃƒÂ¡vel para considerar dois trilhos como
-# pertencentes Ãƒ  mesma flange pela espessura.
+# DiferenÃ§a mÃ¡xima aceitÃ¡vel para considerar dois trilhos como
+# pertencentes Ã  mesma flange pela espessura.
 TOLERANCIA_ESPESSURA_MM = 1.50
 
-# TolerÃƒÂ¢ncia para fechamento da reconstruÃƒÂ§ÃƒÂ£o.
+# TolerÃ¢ncia para fechamento da reconstruÃ§Ã£o.
 TOLERANCIA_RECONSTRUCAO_MM = 0.20
 
 
@@ -232,7 +232,7 @@ class Blank:
 
 
 # =============================================================================
-# FUNÃƒâ€¡Ãƒâ€¢ES BÃƒÂSICAS
+# FUNÃ‡Ã•ES BÃSICAS
 # =============================================================================
 
 def distancia(
@@ -298,7 +298,7 @@ def limpar_texto(
 
 
 # =============================================================================
-# DISTÃƒâ€šNCIA PONTO-LINHA
+# DISTÃ‚NCIA PONTO-LINHA
 # =============================================================================
 
 def distancia_ponto_segmento(
@@ -350,7 +350,7 @@ def distancia_ponto_segmento(
 
 
 # =============================================================================
-# ÃƒÂREA DE POLÃƒÂGONO
+# ÃREA DE POLÃGONO
 # =============================================================================
 
 def area_pontos(
@@ -985,7 +985,7 @@ def pontuar_contorno(
 
 
 # =============================================================================
-# EXTRAÃƒâ€¡ÃƒÆ’O DE LINHAS
+# EXTRAÃ‡ÃƒO DE LINHAS
 # =============================================================================
 
 def extrair_linhas(
@@ -1046,7 +1046,7 @@ def extrair_linhas(
 
 
 # =============================================================================
-# EXTRAÃƒâ€¡ÃƒÆ’O DE TEXTOS
+# EXTRAÃ‡ÃƒO DE TEXTOS
 # =============================================================================
 
 def extrair_textos(
@@ -1119,7 +1119,7 @@ def extrair_textos(
 
 
 # =============================================================================
-# EXTRAIR NÃƒÅ¡MEROS
+# EXTRAIR NÃšMEROS
 # =============================================================================
 
 def extrair_numeros_textuais(
@@ -1223,7 +1223,7 @@ def identificar_espessura(
 
 
 # =============================================================================
-# IDENTIFICAR Ãƒâ€šNGULOS
+# IDENTIFICAR Ã‚NGULOS
 # =============================================================================
 
 def extrair_angulos(
@@ -1237,8 +1237,8 @@ def extrair_angulos(
         texto = item["texto"].upper()
 
         padroes = [
-            r"(\d+(?:[.,]\d+)?)\s*Ã‚Â°",
-            r"(\d+(?:[.,]\d+)?)\s*Ã‚Âº",
+            r"(\d+(?:[.,]\d+)?)\s*Â°",
+            r"(\d+(?:[.,]\d+)?)\s*Âº",
             r"(\d+(?:[.,]\d+)?)\s*DEG",
         ]
 
@@ -1320,7 +1320,7 @@ def extrair_raios(
 
 
 # =============================================================================
-# FUNÃƒâ€¡Ãƒâ€¢ES GEOMÃƒâ€°TRICAS PARA DOBRAS
+# FUNÃ‡Ã•ES GEOMÃ‰TRICAS PARA DOBRAS
 # =============================================================================
 
 def angulo_diferenca(
@@ -1344,6 +1344,27 @@ def angulo_diferenca(
 def eixo_longitudinal(
     contorno: Contorno,
 ) -> str:
+    """
+    Retorna o eixo LONGITUDINAL NO PDF.
+
+    IMPORTANTE:
+    Esta funcao trabalha exclusivamente com a orientacao
+    geometrica original do desenho.
+
+    A geometria do PDF pode estar rotacionada em relacao
+    a orientacao fisica da peca.
+
+    Portanto:
+
+        largura_pdf / altura_pdf
+            -> orientacao usada para detectar as linhas de dobra
+
+        largura_mm / altura_mm
+            -> orientacao fisica usada posteriormente no
+               desenvolvimento e no blank.
+
+    Nao misturar os dois sistemas.
+    """
 
     if (
         contorno.largura_pdf
@@ -1404,7 +1425,7 @@ def coordenada_longitudinal(
 
 
 # =============================================================================
-# NOVA FUNÃƒâ€¡ÃƒÆ’O:
+# NOVA FUNÃ‡ÃƒO:
 # IDENTIFICAR SEGMENTOS LONGITUDINAIS DO CONTORNO
 # =============================================================================
 
@@ -1615,7 +1636,7 @@ def identificar_segmentos_longitudinais(
         )
 
     # -------------------------------------------------------------------------
-    # CLASSIFICAÃƒâ€¡ÃƒÆ’O DOS TRILHOS
+    # CLASSIFICAÃ‡ÃƒO DOS TRILHOS
     # -------------------------------------------------------------------------
 
     for numero, trilho in enumerate(
@@ -1663,10 +1684,10 @@ def reconstruir_perfil_transversal(
 ) -> dict:
 
     """
-    ReconstrÃƒÂ³i as trÃƒÂªs regiÃƒÂµes retas da peÃƒÂ§a a partir da geometria
+    ReconstrÃ³i as trÃªs regiÃµes retas da peÃ§a a partir da geometria
     longitudinal real do contorno.
 
-    A funÃƒÂ§ÃƒÂ£o NÃƒÆ’O utiliza:
+    A funÃ§Ã£o NÃƒO utiliza:
 
         1/3
         2/3
@@ -1675,7 +1696,7 @@ def reconstruir_perfil_transversal(
 
     Ela procura as arestas longitudinais reais.
 
-    O objetivo ÃƒÂ© produzir evidÃƒÂªncia geomÃƒÂ©trica para:
+    O objetivo Ã© produzir evidÃªncia geomÃ©trica para:
 
         ABA 1
         DOBRA 1
@@ -1683,10 +1704,10 @@ def reconstruir_perfil_transversal(
         DOBRA 2
         ABA 3
 
-    As posiÃƒÂ§ÃƒÂµes das dobras continuam sendo obtidas das linhas internas.
+    As posiÃ§Ãµes das dobras continuam sendo obtidas das linhas internas.
 
-    A geometria longitudinal serve para validar que existem trÃƒÂªs
-    regiÃƒÂµes fÃƒÂ­sicas da peÃƒÂ§a e para fornecer a separaÃƒÂ§ÃƒÂ£o entre
+    A geometria longitudinal serve para validar que existem trÃªs
+    regiÃµes fÃ­sicas da peÃ§a e para fornecer a separaÃ§Ã£o entre
     as faces da chapa.
     """
 
@@ -1797,7 +1818,7 @@ def reconstruir_perfil_transversal(
     )
 
     # -------------------------------------------------------------------------
-    # POSIÃƒâ€¡Ãƒâ€¢ES DAS DOBRAS
+    # POSIÃ‡Ã•ES DAS DOBRAS
     # -------------------------------------------------------------------------
 
     posicoes = sorted(
@@ -1830,16 +1851,13 @@ def reconstruir_perfil_transversal(
     p1 = posicoes[0]
     p2 = posicoes[1]
 
-    dimensao_transversal = (
-        contorno.altura_mm
-        if trilhos_info[
-            "eixo_longitudinal"
-        ] == "X"
-        else contorno.largura_mm
+    dimensao_transversal = min(
+        contorno.largura_mm,
+        contorno.altura_mm,
     )
 
     # -------------------------------------------------------------------------
-    # REGIÃƒâ€¢ES GEOMÃƒâ€°TRICAS EXTERNAS
+    # REGIÃ•ES GEOMÃ‰TRICAS EXTERNAS
     # -------------------------------------------------------------------------
 
     regiao_1 = p1
@@ -1880,7 +1898,7 @@ def reconstruir_perfil_transversal(
         }
 
     # -------------------------------------------------------------------------
-    # IDENTIFICAÃƒâ€¡ÃƒÆ’O DAS ABAS
+    # IDENTIFICAÃ‡ÃƒO DAS ABAS
     # -------------------------------------------------------------------------
 
     abas = [
@@ -1937,7 +1955,7 @@ def reconstruir_perfil_transversal(
     ]
 
     # -------------------------------------------------------------------------
-    # VALIDAÃƒâ€¡ÃƒÆ’O DOS TRILHOS
+    # VALIDAÃ‡ÃƒO DOS TRILHOS
     # -------------------------------------------------------------------------
 
     comprimento_longitudinal = (
@@ -2194,8 +2212,8 @@ def detectar_linhas_dobra_geometricas(
             continue
 
         # A linha precisa cobrir pelo menos 70% do comprimento do
-        # contorno. O teste de fraÃ§Ã£o acima jÃ¡ limita o comprimento
-        # absoluto; este segundo teste exige que ela tambÃ©m esteja
+        # contorno. O teste de fração acima já limita o comprimento
+        # absoluto; este segundo teste exige que ela também esteja
         # realmente sobre o contorno selecionado.
         fracao_sobreposicao = (
             sobreposicao / comprimento_longitudinal_pdf
@@ -3026,12 +3044,12 @@ def estimar_desenvolvimento(
     eixo = deteccao_geometrica.get("eixo_longitudinal")
 
     if eixo == "X":
-        dimensao_transversal_mm = contorno.altura_mm
+        dimensao_transversal_mm = min(contorno.largura_mm, contorno.altura_mm)
         comprimento_longitudinal_mm = contorno.largura_mm
         eixo_desenvolvimento = "TRANSVERSAL_Y"
 
     elif eixo == "Y":
-        dimensao_transversal_mm = contorno.largura_mm
+        dimensao_transversal_mm = min(contorno.largura_mm, contorno.altura_mm)
         comprimento_longitudinal_mm = contorno.altura_mm
         eixo_desenvolvimento = "TRANSVERSAL_X"
 
@@ -3465,31 +3483,49 @@ def calcular_blank(
             valido=False,
         )
 
-    eixo_longitudinal = (
-        desenvolvimento_detalhes.get(
-            "eixo_longitudinal"
-        )
+    # =====================================================================
+    # COMPRIMENTO LONGITUDINAL DO BLANK
+    #
+    # O eixo X/Y do PDF NÃO determina a orientação física do blank.
+    #
+    # O desenvolvimento já representa a dimensão transversal desenvolvida.
+    # A dimensão longitudinal original da peça é a maior dimensão do
+    # contorno físico.
+    #
+    # Componente 046:
+    #
+    #   Contorno = 672.0023 x 162.9995 mm
+    #
+    #   Desenvolvimento = 136.5960 mm
+    #   Longitudinal   = 672.0023 mm
+    #
+    # Portanto:
+    #
+    #   Blank = 136.5960 x 672.0023 mm
+    #
+    # NÃO utilizar aqui:
+    #
+    #   eixo_longitudinal
+    #   eixo PDF
+    #   desenvolvimento_detalhes["comprimento_longitudinal_mm"]
+    #
+    # porque esses dados são da detecção geométrica do desenho e podem
+    # representar a orientação dos eixos PDF, não a orientação física
+    # final do blank.
+    # =====================================================================
+
+    comprimento_longitudinal = max(
+        contorno.largura_mm,
+        contorno.altura_mm,
     )
 
-    if eixo_longitudinal == "X":
-
-        comprimento_longitudinal = (
-            contorno.largura_mm
-        )
-
-    elif eixo_longitudinal == "Y":
-
-        comprimento_longitudinal = (
-            contorno.altura_mm
-        )
-
-    else:
+    if comprimento_longitudinal <= 0:
         return Blank(
             comprimento_desenvolvido_mm=0.0,
             largura_blank_mm=0.0,
             comprimento_blank_mm=0.0,
             espessura_mm=espessura_mm,
-            metodo="NAO_CALCULADO_EIXO_LONGITUDINAL_INVALIDO",
+            metodo="NAO_CALCULADO_DIMENSAO_LONGITUDINAL_INVALIDA",
             valido=False,
         )
 
@@ -3511,7 +3547,6 @@ def calcular_blank(
 
         valido=True,
     )
-
 
 # =============================================================================
 # DETECTAR CONTORNOS
@@ -3995,7 +4030,7 @@ def gerar_json_calculadora_corte(
 
 
 # =============================================================================
-# RELATÃƒâ€œRIO TXT
+# RELATÃ“RIO TXT
 # =============================================================================
 
 def gerar_relatorio(
@@ -4016,7 +4051,7 @@ def gerar_relatorio(
         "AIZI ENGINEERING AI"
     )
     linhas.append(
-        "DIAGNÃƒâ€œSTICO DE DESENHO TÃƒâ€°CNICO"
+        "DIAGNÃ“STICO DE DESENHO TÃ‰CNICO"
     )
     linhas.append("=" * 80)
 
@@ -4053,17 +4088,17 @@ def gerar_relatorio(
     )
 
     linhas.append(
-        f"ÃƒÂrea: "
-        f"{contorno.area_mm2:.4f} mmÃ‚Â²"
+        f"Ãrea: "
+        f"{contorno.area_mm2:.4f} mmÂ²"
     )
 
     linhas.append(
-        f"PerÃƒÂ­metro: "
+        f"PerÃ­metro: "
         f"{contorno.perimetro_mm:.4f} mm"
     )
 
     linhas.append(
-        f"VÃƒÂ©rtices: "
+        f"VÃ©rtices: "
         f"{contorno.vertices}"
     )
 
@@ -4106,7 +4141,7 @@ def gerar_relatorio(
                 f"({item['x2_mm']:.4f}, "
                 f"{item['y2_mm']:.4f}) | "
                 f"L={item['comprimento_mm']:.4f} mm | "
-                f"Ãƒâ€šngulo={item['angulo_graus']:.2f}Ã‚Â° | "
+                f"Ã‚ngulo={item['angulo_graus']:.2f}Â° | "
                 f"{item['tipo']}"
             )
         )
@@ -4114,7 +4149,7 @@ def gerar_relatorio(
     linhas.append("")
 
     # -------------------------------------------------------------------------
-    # DETECÃƒâ€¡ÃƒÆ’O GEOMÃƒâ€°TRICA DAS DOBRAS
+    # DETECÃ‡ÃƒO GEOMÃ‰TRICA DAS DOBRAS
     # -------------------------------------------------------------------------
 
     deteccao = (
@@ -4126,7 +4161,7 @@ def gerar_relatorio(
 
     linhas.append("=" * 80)
     linhas.append(
-        "DETECÃƒâ€¡ÃƒÆ’O GEOMÃƒâ€°TRICA DAS DOBRAS"
+        "DETECÃ‡ÃƒO GEOMÃ‰TRICA DAS DOBRAS"
     )
     linhas.append("=" * 80)
 
@@ -4141,7 +4176,7 @@ def gerar_relatorio(
     )
 
     linhas.append(
-        f"DimensÃƒÂ£o transversal: "
+        f"DimensÃ£o transversal: "
         f"{deteccao.get('dimensao_transversal_mm', 0):.4f} mm"
     )
 
@@ -4158,7 +4193,7 @@ def gerar_relatorio(
     linhas.append("")
 
     linhas.append(
-        "CANDIDATOS GEOMÃƒâ€°TRICOS:"
+        "CANDIDATOS GEOMÃ‰TRICOS:"
     )
 
     for candidato in deteccao.get(
@@ -4168,7 +4203,7 @@ def gerar_relatorio(
 
         linhas.append(
             (
-                f"  posiÃƒÂ§ÃƒÂ£o="
+                f"  posiÃ§Ã£o="
                 f"{candidato.get('posicao_mm_desde_borda', 0):.4f} mm | "
                 f"comprimento="
                 f"{candidato.get('comprimento_total_mm', 0):.4f} mm | "
@@ -4193,7 +4228,7 @@ def gerar_relatorio(
         linhas.append(
             (
                 f"  Dobra {linha.get('numero', 0):02d} | "
-                f"posiÃƒÂ§ÃƒÂ£o="
+                f"posiÃ§Ã£o="
                 f"{linha.get('posicao_mm', 0):.4f} mm | "
                 f"comprimento="
                 f"{linha.get('comprimento_mm', 0):.4f} mm | "
@@ -4217,7 +4252,7 @@ def gerar_relatorio(
 
     linhas.append("=" * 80)
     linhas.append(
-        "RECONSTRUÃƒâ€¡ÃƒÆ’O GEOMÃƒâ€°TRICA DAS ABAS"
+        "RECONSTRUÃ‡ÃƒO GEOMÃ‰TRICA DAS ABAS"
     )
     linhas.append("=" * 80)
 
@@ -4250,9 +4285,9 @@ def gerar_relatorio(
         linhas.append(
             (
                 f"  Trilho {trilho.get('numero', 0):02d} | "
-                f"posiÃƒÂ§ÃƒÂ£o transversal="
+                f"posiÃ§Ã£o transversal="
                 f"{trilho.get('coordenada_media_mm', 0):.4f} mm | "
-                f"comprimento mÃƒÂ¡ximo="
+                f"comprimento mÃ¡ximo="
                 f"{trilho.get('comprimento_maximo_mm', 0):.4f} mm | "
                 f"segmentos="
                 f"{trilho.get('quantidade_segmentos', 0)}"
@@ -4262,7 +4297,7 @@ def gerar_relatorio(
     linhas.append("")
 
     linhas.append(
-        "REGIÃƒâ€¢ES TRANSVERSAIS:"
+        "REGIÃ•ES TRANSVERSAIS:"
     )
 
     regioes = perfil.get(
@@ -4273,15 +4308,15 @@ def gerar_relatorio(
     if len(regioes) == 3:
 
         linhas.append(
-            f"  RegiÃƒÂ£o 1: {regioes[0]:.4f} mm"
+            f"  RegiÃ£o 1: {regioes[0]:.4f} mm"
         )
 
         linhas.append(
-            f"  RegiÃƒÂ£o 2: {regioes[1]:.4f} mm"
+            f"  RegiÃ£o 2: {regioes[1]:.4f} mm"
         )
 
         linhas.append(
-            f"  RegiÃƒÂ£o 3: {regioes[2]:.4f} mm"
+            f"  RegiÃ£o 3: {regioes[2]:.4f} mm"
         )
 
     linhas.append("")
@@ -4318,10 +4353,10 @@ def gerar_relatorio(
         linhas.append(
             (
                 f"Dobra {d.numero:02d} | "
-                f"Ãƒâ€šngulo={d.angulo:.2f}Ã‚Â° | "
+                f"Ã‚ngulo={d.angulo:.2f}Â° | "
                 f"Raio={raio} | "
-                f"PosiÃƒÂ§ÃƒÂ£o={posicao} | "
-                f"ConfianÃƒÂ§a={d.confianca:.2f} | "
+                f"PosiÃ§Ã£o={posicao} | "
+                f"ConfianÃ§a={d.confianca:.2f} | "
                 f"Origem={d.origem}"
             )
         )
@@ -4329,12 +4364,12 @@ def gerar_relatorio(
     linhas.append("")
 
     # -------------------------------------------------------------------------
-    # SEQUÃƒÅ NCIA
+    # SEQUÃŠNCIA
     # -------------------------------------------------------------------------
 
     linhas.append("=" * 80)
     linhas.append(
-        "SEQUÃƒÅ NCIA REAL DO DESENVOLVIMENTO"
+        "SEQUÃŠNCIA REAL DO DESENVOLVIMENTO"
     )
     linhas.append("=" * 80)
 
@@ -4348,7 +4383,7 @@ def gerar_relatorio(
     if not sequencia:
 
         linhas.append(
-            "DESENVOLVIMENTO NÃƒÆ’O CALCULADO."
+            "DESENVOLVIMENTO NÃƒO CALCULADO."
         )
 
     else:
@@ -4391,7 +4426,7 @@ def gerar_relatorio(
                         f"{item.get('dobra', '')} | "
                         f"{comprimento:.4f} mm | "
                         f"A="
-                        f"{item.get('angulo_graus', 0):.2f}Ã‚Â° | "
+                        f"{item.get('angulo_graus', 0):.2f}Â° | "
                         f"R="
                         f"{item.get('raio_mm', 0):.4f} mm | "
                         f"K="
@@ -4417,12 +4452,12 @@ def gerar_relatorio(
     )
 
     linhas.append(
-        f"MÃƒÂ©todo: "
+        f"MÃ©todo: "
         f"{desenvolvimento_detalhes.get('metodo', '')}"
     )
 
     linhas.append(
-        f"Base geomÃƒÂ©trica transversal: "
+        f"Base geomÃ©trica transversal: "
         f"{desenvolvimento_detalhes.get('base_mm', 0):.4f} mm"
     )
 
@@ -4437,17 +4472,17 @@ def gerar_relatorio(
     )
 
     linhas.append(
-        f"Desenvolvimento por sequÃƒÂªncia: "
+        f"Desenvolvimento por sequÃªncia: "
         f"{desenvolvimento_detalhes.get('desenvolvimento_mm', 0):.4f} mm"
     )
 
     linhas.append(
-        f"ConferÃƒÂªncia por BD: "
+        f"ConferÃªncia por BD: "
         f"{desenvolvimento_detalhes.get('desenvolvimento_por_bd_mm', 0):.4f} mm"
     )
 
     linhas.append(
-        f"DiferenÃƒÂ§a entre mÃƒÂ©todos: "
+        f"DiferenÃ§a entre mÃ©todos: "
         f"{desenvolvimento_detalhes.get('diferenca_entre_metodos_mm', 0):.4f} mm"
     )
 
@@ -4476,7 +4511,7 @@ def gerar_relatorio(
         linhas.append(
             (
                 f"Dobra {item['dobra']:02d} | "
-                f"A={item['angulo_graus']:.2f}Ã‚Â° | "
+                f"A={item['angulo_graus']:.2f}Â° | "
                 f"R={item['raio_mm']:.4f} mm | "
                 f"T={item['espessura_mm']:.4f} mm | "
                 f"R/T={item['razao_raio_espessura']:.4f} | "
@@ -4484,7 +4519,7 @@ def gerar_relatorio(
                 f"Setback={item['setback_mm']:.4f} mm | "
                 f"BA={item['bend_allowance_mm']:.4f} mm | "
                 f"BD={item['bend_deduction_mm']:.4f} mm | "
-                f"PosiÃƒÂ§ÃƒÂ£o={item.get('posicao_mm', 'N/D')}"
+                f"PosiÃ§Ã£o={item.get('posicao_mm', 'N/D')}"
             )
         )
 
@@ -4496,7 +4531,7 @@ def gerar_relatorio(
 
     linhas.append("=" * 80)
     linhas.append(
-        "ABAS RECONSTRUÃƒÂDAS"
+        "ABAS RECONSTRUÃDAS"
     )
     linhas.append("=" * 80)
 
@@ -4549,18 +4584,18 @@ def gerar_relatorio(
         )
 
         linhas.append(
-            f"MÃƒÂ©todo: "
+            f"MÃ©todo: "
             f"{blank.metodo}"
         )
 
     else:
 
         linhas.append(
-            "BLANK NÃƒÆ’O CALCULADO."
+            "BLANK NÃƒO CALCULADO."
         )
 
         linhas.append(
-            "Motivo: geometria insuficiente para reconstruÃƒÂ§ÃƒÂ£o segura."
+            "Motivo: geometria insuficiente para reconstruÃ§Ã£o segura."
         )
 
     linhas.append("")
@@ -4611,7 +4646,7 @@ def gerar_relatorio(
 
     linhas.append("=" * 80)
     linhas.append(
-        "FIM DO DIAGNÃƒâ€œSTICO"
+        "FIM DO DIAGNÃ“STICO"
     )
     linhas.append("=" * 80)
 
@@ -4627,7 +4662,7 @@ def gerar_relatorio(
 
 
 # =============================================================================
-# IMPRESSÃƒÆ’O
+# IMPRESSÃƒO
 # =============================================================================
 
 def imprimir_resultado(
@@ -4644,7 +4679,7 @@ def imprimir_resultado(
         "AIZI ENGINEERING AI"
     )
     print(
-        "DIAGNÃƒâ€œSTICO FINAL"
+        "DIAGNÃ“STICO FINAL"
     )
     print("=" * 80)
 
@@ -4654,23 +4689,23 @@ def imprimir_resultado(
     )
 
     print(
-        f"DimensÃƒÂ£o estimada: "
+        f"DimensÃ£o estimada: "
         f"{contorno.largura_mm:.4f} x "
         f"{contorno.altura_mm:.4f} mm"
     )
 
     print(
-        f"ÃƒÂrea: "
-        f"{contorno.area_mm2:.4f} mmÃ‚Â²"
+        f"Ãrea: "
+        f"{contorno.area_mm2:.4f} mmÂ²"
     )
 
     print(
-        f"PerÃƒÂ­metro: "
+        f"PerÃ­metro: "
         f"{contorno.perimetro_mm:.4f} mm"
     )
 
     print(
-        f"VÃƒÂ©rtices: "
+        f"VÃ©rtices: "
         f"{contorno.vertices}"
     )
 
@@ -4700,15 +4735,15 @@ def imprimir_resultado(
 
         print(
             f"  Dobra {dobra.numero}: "
-            f"{dobra.angulo:.1f}Ã‚Â° "
+            f"{dobra.angulo:.1f}Â° "
             f"{raio} "
-            f"PosiÃƒÂ§ÃƒÂ£o={posicao} mm"
+            f"PosiÃ§Ã£o={posicao} mm"
         )
 
     print("")
 
     print(
-        "DETECÃƒâ€¡ÃƒÆ’O GEOMÃƒâ€°TRICA:"
+        "DETECÃ‡ÃƒO GEOMÃ‰TRICA:"
     )
 
     print(
@@ -4717,14 +4752,14 @@ def imprimir_resultado(
     )
 
     print(
-        f"  MÃƒÂ©todo: "
+        f"  MÃ©todo: "
         f"{desenvolvimento_detalhes.get('metodo', 'N/D')}"
     )
 
     print("")
 
     print(
-        "RECONSTRUÃƒâ€¡ÃƒÆ’O DAS ABAS:"
+        "RECONSTRUÃ‡ÃƒO DAS ABAS:"
     )
 
     print(
@@ -4778,18 +4813,18 @@ def imprimir_resultado(
 
         print(
             "Desenvolvimento: "
-            "NÃƒÆ’O CALCULADO"
+            "NÃƒO CALCULADO"
         )
 
         print(
             "Blank: "
-            "NÃƒÆ’O CALCULADO"
+            "NÃƒO CALCULADO"
         )
 
     print("")
 
     print(
-        "DiagnÃƒÂ³stico salvo em:"
+        "DiagnÃ³stico salvo em:"
     )
 
     print(
@@ -4824,7 +4859,7 @@ def processar(
     if not caminho.exists():
 
         raise FileNotFoundError(
-            f"Arquivo nÃƒÂ£o encontrado: "
+            f"Arquivo nÃ£o encontrado: "
             f"{caminho}"
         )
 
@@ -4833,7 +4868,7 @@ def processar(
         "AIZI ENGINEERING AI"
     )
     print(
-        "DIAGNÃƒâ€œSTICO DE DESENHO"
+        "DIAGNÃ“STICO DE DESENHO"
     )
     print("=" * 80)
 
@@ -4854,7 +4889,7 @@ def processar(
     ):
 
         print(
-            f"Processando pÃƒÂ¡gina "
+            f"Processando pÃ¡gina "
             f"{numero_pagina}..."
         )
 
@@ -4916,7 +4951,7 @@ def processar(
     if principal is None:
 
         raise RuntimeError(
-            "NÃƒÂ£o foi possÃƒÂ­vel identificar "
+            "NÃ£o foi possÃ­vel identificar "
             "o contorno principal."
         )
 
@@ -4976,7 +5011,7 @@ def processar(
     )
 
     # -------------------------------------------------------------------------
-    # PASTA DE SAÃƒÂDA
+    # PASTA DE SAÃDA
     # -------------------------------------------------------------------------
 
     pasta_saida = (
@@ -5118,7 +5153,7 @@ def selecionar_pdf() -> Optional[str]:
         caminho = (
             filedialog.askopenfilename(
                 title=
-                    "Selecione o desenho tÃƒÂ©cnico",
+                    "Selecione o desenho tÃ©cnico",
 
                 filetypes=[
                     (
@@ -5141,7 +5176,7 @@ def selecionar_pdf() -> Optional[str]:
     except Exception as erro:
 
         print(
-            f"NÃƒÂ£o foi possÃƒÂ­vel abrir seletor: "
+            f"NÃ£o foi possÃ­vel abrir seletor: "
             f"{erro}"
         )
 
@@ -5195,7 +5230,7 @@ if __name__ == "__main__":
         print("")
         print("=" * 80)
         print(
-            "ERRO NO DIAGNÃƒâ€œSTICO"
+            "ERRO NO DIAGNÃ“STICO"
         )
         print("=" * 80)
 
@@ -5209,3 +5244,8 @@ if __name__ == "__main__":
         traceback.print_exc()
 
         sys.exit(1)
+
+
+
+
+
